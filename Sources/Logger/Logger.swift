@@ -72,9 +72,25 @@ public func log<E: Error>(
 @inlinable
 @inline(__always)
 /// Logs an enum case with its assosiated value to console with private privacy level by default.
-public func log<Case>(_ case: Case, category: os.Logger = .default, privacy: _OSLogPrivacy = .private) where Case: EnumReflectable  {
+public func log<Case>(
+    _ case: Case,
+    category: os.Logger = .default,
+    privacy: _OSLogPrivacy = .private,
+    fileID: String = #fileID,
+    functionName: String = #function,
+    lineNumber: Int = #line
+) where Case: EnumReflectable  {
     let sender = "\(`case`.caseName) \(`case`.associatedValues)"
-    log(sender, logType: .info, category: category, privacy: privacy)
+    log(
+        sender,
+        logType: .info,
+        category: category,
+        privacy: privacy,
+        includeCallerLocation: true,
+        fileID: fileID,
+        functionName: functionName,
+        lineNumber: lineNumber
+    )
 }
 
 
@@ -88,17 +104,8 @@ public func debugEarlyExit(
     lineNumber: Int = #line
 ) {
     #if DEBUG
-    let moduleAndFileName = fileID.replacingOccurrences(of: ".swift", with: "")
-    let moduleName = String("\(fileID)".prefix(while: { $0 != "/" }))
-    let fileName = moduleAndFileName
-        .split(separator: "/")
-        .suffix(1)
-        .description
-        .replacingOccurrences(of: "[", with: "")
-        .replacingOccurrences(of: "\"", with: "")
-        .replacingOccurrences(of: "]", with: "")
     let guardMessage = "early exit from \(functionName)\n> \(message)"
-    
+
     // its important to pass magic ids to log, otherwise location is not forwarded
     log(
         guardMessage,
@@ -115,9 +122,22 @@ public func debugEarlyExit(
 @inlinable
 @inline(__always)
 /// Logs a debug message to console; Works only in DEBUG build configuration.
-public func debug(_ message: String) {
+public func debug(
+    _ message: String,
+    fileID: String = #fileID,
+    functionName: String = #function,
+    lineNumber: Int = #line
+) {
     #if DEBUG
-    log(message, logType: .debug, category: .debug)
+    log(
+        message,
+        logType: .debug,
+        category: .debug,
+        includeCallerLocation: true,
+        fileID: fileID,
+        functionName: functionName,
+        lineNumber: lineNumber
+    )
     #endif
 }
 
