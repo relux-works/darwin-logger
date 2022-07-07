@@ -94,6 +94,29 @@ public func log<Case>(
 }
 
 
+@inlinable
+@inline(__always)
+/// Logs an enum case with its assosiated value to console with private privacy level by default.
+public func log(
+        _ case: EnumReflectable,
+        category: os.Logger = .default,
+        privacy: _OSLogPrivacy = .private,
+        fileID: String = #fileID,
+        functionName: String = #function,
+        lineNumber: Int = #line
+)  {
+    let sender = "\(`case`.caseName) \(`case`.associatedValues)"
+    log(
+            sender,
+            logType: .info,
+            category: category,
+            privacy: privacy,
+            includeCallerLocation: true,
+            fileID: fileID,
+            functionName: functionName,
+            lineNumber: lineNumber
+    )
+}
 
 @inlinable
 @inline(__always)
