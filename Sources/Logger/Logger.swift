@@ -71,6 +71,30 @@ public func log<E: Error>(
 
 @inlinable
 @inline(__always)
+/// Logs an error to console using predefined error-logger category.
+public func log(
+        _ error: Error,
+        privacy: _OSLogPrivacy = .private,
+        fileID: String = #fileID,
+        functionName: String = #function,
+        lineNumber: Int = #line
+) {
+
+    // its important to pass magic ids to log, otherwise location is not forwarded
+    log(
+            "\(error.localizedDescription): \(error)",
+            logType: .error,
+            category: .error,
+            privacy: privacy,
+            includeCallerLocation: true,
+            fileID: fileID,
+            functionName: functionName,
+            lineNumber: lineNumber
+    )
+}
+
+@inlinable
+@inline(__always)
 /// Logs an enum case with its assosiated value to console with private privacy level by default.
 public func log<Case>(
     _ case: Case,
