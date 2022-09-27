@@ -1,5 +1,13 @@
 /// Provides caseName and associatedValues custom mirros for enumerations.
-public protocol EnumReflectable: CaseNameReflectable, AssociatedValuesReflectable {}
+public protocol EnumReflectable: CaseNameReflectable, AssociatedValuesReflectable {
+	var logCategory: os.Logger { get }
+}
+
+public extension EnumReflectable {
+	var logCategory: os.Logger {
+		.init(subsystem: os.Logger.host, category: "\(type(of: self))")
+	}
+}
 
 // reflicting enum cases
 public protocol CaseNameReflectable {

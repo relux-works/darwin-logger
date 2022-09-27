@@ -97,18 +97,17 @@ public func log(
 @inline(__always)
 /// Logs an enum case with its assosiated value to console with private privacy level by default.
 public func log<Case>(
-    _ case: Case,
-    category: os.Logger = .default,
+    _ enumReflectable: Case,
     privacy: _OSLogPrivacy = .private,
     fileID: String = #fileID,
     functionName: String = #function,
     lineNumber: Int = #line
 ) where Case: EnumReflectable  {
-    let sender = "\(`case`.caseName) \(`case`.associatedValues)"
+    let sender = "\(enumReflectable.caseName) \(enumReflectable.associatedValues)"
     log(
         sender,
         logType: .info,
-        category: category,
+		category: enumReflectable.logCategory,
         privacy: privacy,
         includeCallerLocation: true,
         fileID: fileID,
@@ -122,18 +121,17 @@ public func log<Case>(
 @inline(__always)
 /// Logs an enum case with its assosiated value to console with private privacy level by default.
 public func log(
-        _ case: EnumReflectable,
-        category: os.Logger = .default,
+        _ enumReflectable: EnumReflectable,
         privacy: _OSLogPrivacy = .private,
         fileID: String = #fileID,
         functionName: String = #function,
         lineNumber: Int = #line
 )  {
-    let sender = "\(`case`.caseName) \(`case`.associatedValues)"
+    let sender = "\(enumReflectable.caseName) \(enumReflectable.associatedValues)"
     log(
             sender,
             logType: .info,
-            category: category,
+			category: enumReflectable.logCategory,
             privacy: privacy,
             includeCallerLocation: true,
             fileID: fileID,
