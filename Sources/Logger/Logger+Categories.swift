@@ -10,4 +10,6 @@ public extension os.Logger {
     
     /// A logger instance that logs to '🔤Default' category within host app subsystem.
     static let `default` = os.Logger(subsystem: host, category: "🔤Default")
+
+    static let performance = os.Logger(subsystem: host, category: "🎭 Performance")
 }
