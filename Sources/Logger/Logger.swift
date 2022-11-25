@@ -12,7 +12,6 @@ public func log(
     functionName: String = #function,
     lineNumber: Int = #line
 ) {
-    
     var message = message
     if includeCallerLocation {
         let moduleAndFileName = fileID.replacingOccurrences(of: ".swift", with: "")
