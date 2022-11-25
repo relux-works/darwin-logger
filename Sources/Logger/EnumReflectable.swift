@@ -1,4 +1,4 @@
-/// Provides caseName and associatedValues custom mirros for enumerations.
+/// Provides caseName and associatedValues custom mirrors for enumerations.
 public protocol EnumReflectable: CaseNameReflectable, AssociatedValuesReflectable {
 	var logCategory: os.Logger { get }
 }
@@ -9,7 +9,7 @@ public extension EnumReflectable {
 	}
 }
 
-// reflicting enum cases
+// reflecting enum cases
 public protocol CaseNameReflectable {
     var caseName: String { get }
 }
@@ -24,7 +24,7 @@ public extension CaseNameReflectable {
     }
 }
 
-// reflicting enum associated values
+// reflecting enum associated values
 public protocol AssociatedValuesReflectable {
     var associatedValues: [String: String] { get }
 }
