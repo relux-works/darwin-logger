@@ -43,10 +43,9 @@ public func log(
 }
 
 
-@inlinable
-@inline(__always)
+
 /// Logs an error to console using predefined error-logger category.
-public func log<E: Error>(
+@inlinable public func log<E: Error>(
     _ error: E,
     privacy: _OSLogPrivacy = .private,
     fileID: String = #fileID,
@@ -68,10 +67,8 @@ public func log<E: Error>(
 }
 
 
-@inlinable
-@inline(__always)
 /// Logs an error to console using predefined error-logger category.
-public func log(
+@inlinable public func log(
         _ error: Error,
         privacy: _OSLogPrivacy = .private,
         fileID: String = #fileID,
@@ -92,10 +89,9 @@ public func log(
     )
 }
 
-@inlinable
-@inline(__always)
+
 /// Logs an enum case with its assosiated value to console with private privacy level by default.
-public func log<Case>(
+@inlinable public func log<Case>(
     _ enumReflectable: Case,
     privacy: _OSLogPrivacy = .private,
     fileID: String = #fileID,
@@ -116,10 +112,8 @@ public func log<Case>(
 }
 
 
-@inlinable
-@inline(__always)
 /// Logs an enum case with its assosiated value to console with private privacy level by default.
-public func log(
+@inlinable public func log(
         _ enumReflectable: EnumReflectable,
         privacy: _OSLogPrivacy = .private,
         fileID: String = #fileID,
@@ -139,9 +133,8 @@ public func log(
     )
 }
 
-@inlinable
-@inline(__always)
-public func debugEarlyExit(
+
+@inlinable public func debugEarlyExit(
     _ message: String,
     fileID: String = #fileID,
     functionName: String = #function,
@@ -163,10 +156,9 @@ public func debugEarlyExit(
     #endif
 }
 
-@inlinable
-@inline(__always)
+
 /// Logs a debug message to console; Works only in DEBUG build configuration.
-public func debug(
+@inlinable public func debug(
     _ message: String,
     fileID: String = #fileID,
     functionName: String = #function,
