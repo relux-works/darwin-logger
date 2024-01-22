@@ -19,7 +19,8 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Logger"
+            name: "Logger",
+            path: "Sources"
         )
     ]
 )
