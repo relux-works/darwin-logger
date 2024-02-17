@@ -4,6 +4,7 @@ public protocol EnumReflectable: CaseNameReflectable, AssociatedValuesReflectabl
 }
 
 public extension EnumReflectable {
+    @inlinable @inline(__always)
 	var logCategory: os.Logger {
 		.init(subsystem: os.Logger.host, category: "\(type(of: self))")
 	}
