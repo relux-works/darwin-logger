@@ -1,6 +1,6 @@
 import Foundation
 
 public extension os.Logger {
-    /// A subsytem of the host app.
-    static var host = Bundle.main.bundleIdentifier!
+    /// A subsystem of the host app.
+	static var host: String { Bundle.main.bundleIdentifier! }
 }

@@ -4,43 +4,41 @@ import Foundation
 @inline(__always)
 /// Logs a message to console with specified log type, category and privacy level.
 public func log(
-    _ message: String,
-    logType: OSLogType = .default,
-    category: os.Logger = .default,
-    privacy: _OSLogPrivacy = .private,
-    includeCallerLocation: Bool = true,
-    fileID: String = #fileID,
-    functionName: String = #function,
-    lineNumber: Int = #line
+	_ message: String,
+	logType: OSLogType = .default,
+	category: os.Logger = .default,
+	privacy: _OSLogPrivacy = .private,
+	includeCallerLocation: Bool = true,
+	fileID: String = #fileID,
+	functionName: String = #function,
+	lineNumber: Int = #line
 ) {
-    var message = message
-    if includeCallerLocation {
-        let moduleAndFileName = fileID.replacingOccurrences(of: ".swift", with: "")
-        let moduleName = String("\(fileID)".prefix(while: { $0 != "/" }))
-        let fileName = moduleAndFileName
-            .split(separator: "/")
-            .suffix(1)
-            .description
-            .replacingOccurrences(of: "[", with: "")
-            .replacingOccurrences(of: "\"", with: "")
-            .replacingOccurrences(of: "]", with: "")
-        let logLocationDescription = "\(lineNumber):\(moduleName).\(fileName).\(functionName)"
-        message = "\(message) \n> location: \(logLocationDescription)"
-    }
-    
-    // privacy argument must be resolved on compile time, hence ugly workaround
-    // more info:
-    // https://stackoverflow.com/questions/62675874/xcode-12-and-oslog-os-log-wrapping-oslogmessage-causes-compile-error-argumen#63036815
-    switch privacy {
-    case .private:
-        category.log(level: logType, "\(message, align: .left(columns: 30), privacy: .private)")
-    case .public:
-        category.log(level: logType, "\(message, align: .left(columns: 30), privacy: .public)")
-    case .auto:
-        category.log(level: logType, "\(message, align: .left(columns: 30), privacy: .auto)")
-    case .sensitive:
-        category.log(level: logType, "\(message, align: .left(columns: 30), privacy: .sensitive)")
-    }
+	var message = message
+	if includeCallerLocation {
+		let moduleAndFileName = fileID.hasSuffix(".swift") ? String(fileID.dropLast(6)) : fileID
+		let moduleName = String(fileID.prefix(while: { $0 != "/" }))
+		let fileName = moduleAndFileName
+			.split(separator: "/")
+			.suffix(1)
+			.description
+			.trimmingCharacters(in: CharacterSet(charactersIn: "[]\""))
+		let logLocationDescription = "\(lineNumber):\(moduleName).\(fileName).\(functionName)"
+		message = "\(message) \n> location: \(logLocationDescription)"
+	}
+	
+	// privacy argument must be resolved on compile time, hence ugly workaround
+	// more info:
+	// https://stackoverflow.com/questions/62675874/xcode-12-and-oslog-os-log-wrapping-oslogmessage-causes-compile-error-argumen#63036815
+	switch privacy {
+		case .private:
+			category.log(level: logType, "\(message, align: .left(columns: 30), privacy: .private)")
+		case .public:
+			category.log(level: logType, "\(message, align: .left(columns: 30), privacy: .public)")
+		case .auto:
+			category.log(level: logType, "\(message, align: .left(columns: 30), privacy: .auto)")
+		case .sensitive:
+			category.log(level: logType, "\(message, align: .left(columns: 30), privacy: .sensitive)")
+	}
 }
 
 
