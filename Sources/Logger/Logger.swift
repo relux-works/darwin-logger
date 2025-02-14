@@ -93,53 +93,6 @@ public func log(
 
 @inlinable
 @inline(__always)
-/// Logs an enum case with its assosiated value to console with private privacy level by default.
-public func log<Case>(
-    _ enumReflectable: Case,
-    privacy: _OSLogPrivacy = .private,
-    fileID: String = #fileID,
-    functionName: String = #function,
-    lineNumber: Int = #line
-) where Case: EnumReflectable  {
-    let sender = "\(enumReflectable.caseName) \(enumReflectable.associatedValues)"
-    log(
-        sender,
-        logType: .info,
-		category: enumReflectable.logCategory,
-        privacy: privacy,
-        includeCallerLocation: true,
-        fileID: fileID,
-        functionName: functionName,
-        lineNumber: lineNumber
-    )
-}
-
-
-@inlinable
-@inline(__always)
-/// Logs an enum case with its assosiated value to console with private privacy level by default.
-public func log(
-        _ enumReflectable: EnumReflectable,
-        privacy: _OSLogPrivacy = .private,
-        fileID: String = #fileID,
-        functionName: String = #function,
-        lineNumber: Int = #line
-)  {
-    let sender = "\(enumReflectable.caseName) \(enumReflectable.associatedValues)"
-    log(
-            sender,
-            logType: .info,
-			category: enumReflectable.logCategory,
-            privacy: privacy,
-            includeCallerLocation: true,
-            fileID: fileID,
-            functionName: functionName,
-            lineNumber: lineNumber
-    )
-}
-
-@inlinable
-@inline(__always)
 public func debugEarlyExit(
     _ message: String,
     fileID: String = #fileID,
