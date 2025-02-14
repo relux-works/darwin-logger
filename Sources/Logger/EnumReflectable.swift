@@ -30,17 +30,29 @@ public protocol AssociatedValuesReflectable {
     var associatedValues: [String: String] { get }
 }
 public extension AssociatedValuesReflectable {
-    var associatedValues: [String: String] {
-        var values = [String: String]()
+    var associatedValues: [String] {
+        var values = [String]()
         guard let associated = Mirror(reflecting: self).children.first else {
             return values
         }
-
-        let children = Mirror(reflecting: associated.value).children
-        for case let item in children {
-            if let label = item.label {
-                values[label] = String(describing: item.value)
+        
+        let valueMirror = Mirror(reflecting: associated.value)
+        switch valueMirror.displayStyle {
+        case .tuple:
+            // Handle tuples (multiple parameters) with labels (e.g., ".0" → "0")
+            for child in valueMirror.children {
+                let label = child.label?.replacingOccurrences(
+                    of: "^\\.",
+                    with: "",
+                    options: .regularExpression
+                )
+                let value = String(describing: child.value)
+                values.append(label != nil ? "\(label!): \(value)" : value)
             }
+        default:
+            // For single values, append the value WITHOUT any label
+            let value = String(describing: associated.value)
+            values.append(value)
         }
         return values
     }
