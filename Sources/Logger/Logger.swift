@@ -1,3 +1,5 @@
+import Foundation
+
 @inlinable
 @inline(__always)
 /// Logs a message to console with specified log type, category and privacy level.
